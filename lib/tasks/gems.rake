@@ -1,6 +1,6 @@
 desc "Copy third-party gems into ./lib"
 task :freeze_other_gems do
-  libraries = %w(gruff paypal money)
+  libraries = %w(acts_as_taggable)
   require 'rubygems'
   require 'find'
 
