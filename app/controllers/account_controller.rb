@@ -1,5 +1,8 @@
 class AccountController < ApplicationController
   include AuthenticatedSystem
+
+  observer :user_observer
+
   # Be sure to include AuthenticationSystem in Application Controller instead
   # To require logins, use:
   #

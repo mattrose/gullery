@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'user_mailer'
+require 'user_notifier'
 
 class UserNotifierTest < Test::Unit::TestCase
   FIXTURES_PATH = File.dirname(__FILE__) + '/../fixtures'
@@ -14,6 +14,10 @@ class UserNotifierTest < Test::Unit::TestCase
 
     @expected = TMail::Mail.new
     @expected.set_content_type "text", "plain", { "charset" => CHARSET }
+  end
+
+  def test_to_replace
+    assert true
   end
 
   private
