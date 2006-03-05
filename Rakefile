@@ -9,4 +9,4 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 
-task :default => [:test_units, :test_functional]
+task :default => [:test_plugins, :test_units, :test_functional]

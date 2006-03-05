@@ -1,7 +1,9 @@
 module AuthenticatedSystem
-  protected
+
+protected
+
   def logged_in?
-    current_user
+    current_user.nil? ? false : true
   end
 
   # accesses the current user from the session.

@@ -66,7 +66,7 @@ module MiniMagick
       end      
     end
       
-    # Any message that sent that is unknown is sent through morgrify 
+    # Any message that sent that is unknown is sent through mogrify 
     #
     # Look here to find all the commands (http://www.imagemagick.org/script/mogrify.php)
     def method_missing(symbol, *args)

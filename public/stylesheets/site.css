@@ -1,0 +1,100 @@
+
+body, p, input {
+  font-family: "Futura", "Lucida Grande", Verdana, sans-serif;
+}
+
+body {
+  background: #525252 url("http://nubyonrails.com/images/theme/bgcolor.gif") fixed repeat-x top left;
+  color: white;
+}
+
+input {
+  color: black;
+}
+
+/******************************
+*  Layout
+******************************/
+
+#container {
+  width: 650px;
+  margin: 0 auto;
+}
+
+#header {
+  
+}
+
+#content {
+  
+}
+
+#footer {
+  font-size: 0.8em;
+  text-align: right;
+  clear: both;
+  border-top: 2px solid #333;
+}
+
+
+/******************************
+*  HTML Elements
+******************************/
+
+h1 {
+  margin: 0 0 10px 0;
+  padding-bottom: 8px;
+  border-bottom: 4px solid #333;
+}
+
+a, a:visited {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  color: white;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+}
+
+form {
+  display: block;
+  clear: both;
+  text-align: center;
+  padding: 1em;
+}
+
+input {
+  font-size: 1.2em;
+  padding: 0.2em;
+}
+
+
+/******************************
+*  Thumbnails
+******************************/
+
+#project_list, #asset_list {
+  list-style-type: none;
+  margin: 0; padding: 0;
+}
+
+#project_list li, #asset_list li {
+  width: 200px;
+  float: left;
+  padding: 8px;
+}
+#project_list li a img, #project_list li a:visited img, #asset_list li a img, #asset_list li a:visited img {
+  display: block;
+  margin-bottom: 5px;
+  border: 0;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+#project_list li a:hover img, #asset_list li a:hover img {
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+}
+
+
+

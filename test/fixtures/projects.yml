@@ -1,4 +1,3 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 cloneberry_soda:
   id: 1
   user_id: 1
@@ -10,9 +9,6 @@ cloneberry_soda:
   description: |
     Cloneberry Soda is a tasty drink.
     
-    Full of nutrients and lots of sugar. You'll feel twice as fit!
+    Full of nutrients and lots of sugar. You''ll feel twice as fit!
     
     Visit the "Cloneberry Soda Website":http://cloneberrysoda.com for details.
-
-cloneberry_energy_bar:
-  id: 2

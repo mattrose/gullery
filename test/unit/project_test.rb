@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ProjectTest < Test::Unit::TestCase
-  fixtures :projects, :users
+  fixtures :projects, :users, :assets
 
   def test_create_project
     assert create_project.valid?
@@ -15,6 +15,13 @@ class ProjectTest < Test::Unit::TestCase
   def test_should_require_user_id
     p = create_project(:user_id => nil)
     assert p.errors.on(:user_id)
+  end
+
+  def test_should_show_only_visible_assets
+    p = Project.find 1
+    assert_equal 4, p.assets.length
+    assert_equal 3, p.visible_assets.length
+    # TODO assert_equal [assets(:person_drinking), assets(:can_label), assets(:closeup)], p.visible_assets
   end
 
 # BUG: Not working...slips through with no errors

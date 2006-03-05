@@ -4,6 +4,10 @@ module AuthenticatedTestHelper
     @request.session[:user] = users(user).id
   end
 
+  def logout
+    @request.session[:user] = nil
+  end
+
   # Assert the block redirects to the login
   # 
   #   assert_requires_login(:bob) { get :edit, :id => 1 }

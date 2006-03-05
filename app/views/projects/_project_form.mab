@@ -1,0 +1,6 @@
+form_remote_tag(:url => { :action => 'create' }, :html => { :id => 'project_form_new' }, :loading => "Element.show('loading')")
+  self << "Name: "
+  text_field :project, :name, :size => 20
+  submit_tag "Save"
+  image_tag 'spinner.gif', :style => 'display: none;', :id => 'loading'
+end_form_tag

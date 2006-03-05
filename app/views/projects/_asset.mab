@@ -1,0 +1,4 @@
+li :id => "asset_#{asset.id}" do
+  link_to image_tag(asset.web_path(:thumb)), asset.web_path, :rel => 'lightbox', :title => capture { textilize(asset.caption) }
+  textilize asset.caption
+end

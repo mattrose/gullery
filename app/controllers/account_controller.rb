@@ -35,6 +35,8 @@ class AccountController < ApplicationController
   end
 
   def signup
+    # Only one user allowed to signup
+    (redirect_to(:controller => '/') && return) if User.count > 0
     @user = User.new(params[:user])
     return unless request.post?
     if @user.save

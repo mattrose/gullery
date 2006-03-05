@@ -1,0 +1,6 @@
+
+ul :id => 'project_list' do
+  render :partial => 'project', :collection => @projects
+end
+
+render :partial => 'project_form' if current_user

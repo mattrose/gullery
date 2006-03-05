@@ -1,0 +1,6 @@
+
+ul :id => 'asset_list' do
+  render :partial => 'asset', :collection => @project.assets
+end
+
+render :partial => 'asset_form' if current_user

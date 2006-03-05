@@ -35,8 +35,8 @@
 //
 
 // If you would like to use a custom loading image or close button reference them in the next two lines.
-var loadingImage = 'loading.gif';		
-var closeButton = 'close.gif';		
+var loadingImage = '/images/loading.gif';		
+var closeButton = '/images/x.png';		
 
 
 
@@ -404,7 +404,7 @@ function initLightbox()
 	// create keyboard message
 	var objKeyboardMsg = document.createElement("div");
 	objKeyboardMsg.setAttribute('id','keyboardMsg');
-	objKeyboardMsg.innerHTML = 'press <kbd>x</kbd> to close';
+	//objKeyboardMsg.innerHTML = 'press <kbd>x</kbd> to close';
 	objLightboxDetails.appendChild(objKeyboardMsg);
 
 

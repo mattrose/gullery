@@ -32,7 +32,8 @@ class AccountControllerTest < Test::Unit::TestCase
     assert_response :success
   end
 
-  def test_should_allow_signup
+  def test_should_allow_signup_if_no_other_users
+    User.find(1).destroy
     old_count = User.count
     create_user
     assert_response :redirect
@@ -40,6 +41,7 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_login_on_signup
+    User.find(1).destroy
     old_count = User.count
     create_user(:login => nil)
     assert assigns(:user).errors.on(:login)
@@ -48,6 +50,7 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_password_on_signup
+    User.find(1).destroy
     old_count = User.count
     create_user(:password => nil)
     assert assigns(:user).errors.on(:password)
@@ -56,6 +59,7 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_password_confirmation_on_signup
+    User.find(1).destroy
     old_count = User.count
     create_user(:password_confirmation => nil)
     assert assigns(:user).errors.on(:password_confirmation)
@@ -64,12 +68,20 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_email_on_signup
+    User.find(1).destroy
     old_count = User.count
     create_user(:email => nil)
     assert assigns(:user).errors.on(:email)
     assert_response :success
     assert_equal old_count, User.count
   end
+
+  def test_should_reject_extra_logins
+    old_count = User.count
+    create_user
+    assert_response :redirect
+  end
+
 
   def test_should_logout
     login_as :quentin
@@ -78,31 +90,8 @@ class AccountControllerTest < Test::Unit::TestCase
     assert_response :redirect
   end
 
-  # Uncomment if you're activating new user accounts
-  # 
-  # def test_should_activate_user
-  #   assert_nil User.authenticate('arthur', 'arthur')
-  #   get :activate, :id => users(:arthur).activation_code
-  #   assert_equal users(:arthur), User.authenticate('arthur', 'arthur')
-  # end
-  # 
-  # def test_should_activate_user_and_send_activation_email
-  #   get :activate, :id => users(:arthur).activation_code
-  #   assert_equal 1, @emails.length
-  #   assert(@emails.first.subject =~ /Your account has been activated/)
-  #   assert(@emails.first.body    =~ /#{assigns(:user).login}, your account has been activated/)
-  # end
-  # 
-  # def test_should_send_activation_email_after_signup
-  #   create_user
-  #   assert_equal 1, @emails.length
-  #   assert(@emails.first.subject =~ /Please activate your new account/)
-  #   assert(@emails.first.body    =~ /Username: quire/)
-  #   assert(@emails.first.body    =~ /Password: quire/)
-  #   assert(@emails.first.body    =~ /account\/activate\/#{assigns(:user).activation_code}/)
-  # end
+protected
 
-  protected
   def create_user(options = {})
     post :signup, :user => { :name => 'Quire Jamison', :login => 'quire', :email => 'quire@example.com', 
                              :password => 'quire', :password_confirmation => 'quire' }.merge(options)

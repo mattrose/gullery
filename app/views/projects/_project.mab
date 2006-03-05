@@ -1,0 +1,4 @@
+li :id => "project_#{project.id}" do
+  link_to image_tag(project.poster_asset.web_path(:thumb), :width => Asset.thumbnail_width, :height => Asset.thumbnail_height), projects_url(:action => 'show', :id => project.id)
+  self << project.name
+end
