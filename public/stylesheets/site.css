@@ -45,6 +45,7 @@ h1 {
   margin: 0 0 10px 0;
   padding-bottom: 8px;
   border-bottom: 4px solid #333;
+  font-weight: normal;
 }
 
 a, a:visited {
