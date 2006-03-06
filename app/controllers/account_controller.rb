@@ -3,6 +3,15 @@ class AccountController < ApplicationController
 
   observer :user_observer
 
+  before_filter :login_required, :only => [:update_description]
+  
+  def update_description
+    current_user.description = @params[:value]
+    if current_user.save
+      render :text => textilize(current_user.description)
+    end
+  end
+
   # Be sure to include AuthenticationSystem in Application Controller instead
   # To require logins, use:
   #
@@ -29,18 +38,23 @@ class AccountController < ApplicationController
     #::ActionController::CgiRequest::DEFAULT_SESSION_OPTIONS.update(:session_expires => 4.weeks.from_now) if params[:remember_me]
     self.current_user = User.authenticate(params[:login], params[:password])
     if current_user
-      redirect_back_or_default(:controller => '/account', :action => 'index')
+      redirect_back_or_default(:controller => '/')
       flash[:notice] = "Logged in successfully"
     end
   end
 
   def signup
-    # Only one user allowed to signup
-    (redirect_to(:controller => '/') && return) if User.count > 0
+    if User.count > 0
+      flash[:notice] = 'Someone has already signed up for this installation!'
+      redirect_to(:controller => '/')
+      return
+    end
     @user = User.new(params[:user])
     return unless request.post?
+    @user.website = "http://#{@params[:user][:website]}"
     if @user.save
-      redirect_back_or_default(:controller => '/account', :action => 'index')
+      self.current_user = User.authenticate(params[:user][:login], params[:user][:password])
+      redirect_back_or_default(:controller => '/')
       flash[:notice] = "Thanks for signing up!"
     end
   end
@@ -58,6 +72,7 @@ class AccountController < ApplicationController
   def logout
     self.current_user = nil
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default(:controller => '/account', :action => 'index')
+    redirect_back_or_default(:controller => '/')
   end
+  
 end

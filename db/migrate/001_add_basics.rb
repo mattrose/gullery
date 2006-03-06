@@ -34,6 +34,14 @@ class AddBasics < ActiveRecord::Migration
       t.column "tag_id", :integer
       t.column "project_id", :integer
     end
+    
+    create_table "sessions", :force => true do |t|
+      t.column "session_id", :string
+      t.column "data", :text
+      t.column "updated_at", :datetime
+    end
+
+    add_index "sessions", ["session_id"], :name => "sessions_session_id_index"
   end
 
   def self.down
@@ -42,5 +50,7 @@ class AddBasics < ActiveRecord::Migration
     drop_table :tags
     drop_table :tags_projects
     drop_table :tags_assets
+    drop_table :sessions
+    remove_index :sessions, "sessions_session_id_index"
   end
 end

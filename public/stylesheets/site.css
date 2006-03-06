@@ -1,10 +1,10 @@
 
-body, p, input {
+body, p, input, textarea {
   font-family: "Futura", "Lucida Grande", Verdana, sans-serif;
 }
 
 body {
-  background: #525252 url("http://nubyonrails.com/images/theme/bgcolor.gif") fixed repeat-x top left;
+  background: #525252 url("/images/bgcolor.gif") fixed repeat-x top left;
   color: white;
 }
 
@@ -52,9 +52,8 @@ a, a:visited {
   text-decoration: none;
 }
 a:hover {
-  color: white;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
+  color: black;
+  background-color: white;
 }
 
 form {
@@ -67,8 +66,13 @@ form {
 input {
   font-size: 1.2em;
   padding: 0.2em;
+  margin-right: 10px;
+  margin-top: 5px;
 }
 
+small, small a, small a:visited {
+  color: #cccccc;
+}
 
 /******************************
 *  Thumbnails
@@ -84,17 +88,65 @@ input {
   float: left;
   padding: 8px;
 }
+
 #project_list li a img, #project_list li a:visited img, #asset_list li a img, #asset_list li a:visited img {
   display: block;
   margin-bottom: 5px;
-  border: 0;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-}
-#project_list li a:hover img, #asset_list li a:hover img {
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
+  border: 1px solid #999999;
+  padding: 3px;
 }
 
+#project_list li a:hover img, #asset_list li a:hover img {
+  background-color: black;
+  border: 1px solid white;
+}
+
+#project_list li small, #asset_list li small {
+  display: block;
+}
+
+/******************************
+*  Tools
+******************************/
+
+.toolbar { 
+  background-color: #333333;
+  opacity: .7;
+	filter: alpha(opacity=70);
+	padding-left: 10px;
+}
+
+.toolbar span {
+  padding-right: 5px;
+  font-variant: small-caps;
+}
+
+.toolbar span.handle {
+  cursor: move;
+}
+
+/******************************
+*  In Place Editor
+******************************/
+
+.inplaceeditor-form {
+  margin: 0; padding: 0;
+  display: inline;
+  clear: none;
+}
+.inplaceeditor-form input { 
+  font-size: 0.8em;
+  padding: 0.1em;
+  margin: 0;
+}
+.inplaceeditor-form input[type=text] { 
+  width: 100px;
+}
+.inplaceeditor-form textarea { 
+
+}
+.inplaceeditor-form a { 
+  font-size: 0.8em;
+}
 
 

@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.projects 'projects/:action/:id', :controller => 'projects', :action => 'list'
   map.assets 'assets/:action/:id', :controller => 'assets', :action => 'show'
+  map.account 'account/:action', :controller => 'account'
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'

@@ -1,2 +1,2 @@
-page.hide "project_#{@project.id}"
+page.remove "project_#{@project.id}"
 page.hide 'loading'

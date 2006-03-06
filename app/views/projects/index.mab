@@ -1,6 +1,14 @@
+div.user_description! do
+  textilize(@user.description.blank? ? '&nbsp;' : @user.description)
+end
 
 ul :id => 'project_list' do
   render :partial => 'project', :collection => @projects
 end
 
-render :partial => 'project_form' if current_user
+if @session[:user]
+  render(:partial => 'project_form')
+  in_place_editor "user_description", 
+                  :url => capture { account_url(:action => 'update_description') }, 
+                  :rows => 5
+end

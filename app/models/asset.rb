@@ -16,9 +16,9 @@ class Asset < ActiveRecord::Base
   @@thumbnail_height = '120'
 
   # Returns the full path to this asset on disk. /Users/bert/photos/pigeon.jpg
-  # TODO
-  def absolute_path
-    File.expand_path("public#{path}", RAILS_ROOT)
+  # TODO Take size argument
+  def absolute_path(size=:normal)
+    File.expand_path("public#{self.web_path(size)}", RAILS_ROOT)
   end
 
   # :thumb, :normal, :original
@@ -49,10 +49,17 @@ class Asset < ActiveRecord::Base
 
   def create_thumbnail
 		image = MiniMagick::Image.from_file(self.absolute_path)
-    image.combine_options do |i|
-      i.background "white"
-      i.resize "#{@@thumbnail_width}x"
-      i.crop "#{@@thumbnail_width}x#{@@thumbnail_height}+0+0!"
+		if (image.width.to_f/image.height.to_f) >= (@@thumbnail_width.to_f/@@thumbnail_height.to_f)
+      # Wider than tall...use height
+      image.combine_options do |i|
+        i.resize "x#{@@thumbnail_height}"
+        i.crop "#{@@thumbnail_width}x#{@@thumbnail_height}+0+0!"
+      end
+    else
+      image.combine_options do |i|
+        i.resize "#{@@thumbnail_width}x"
+        i.crop "#{@@thumbnail_width}x#{@@thumbnail_height}+0+0!"
+      end
     end
     image.write(File.expand_path("public#{self.web_path(:thumb)}", RAILS_ROOT))
   end
@@ -69,45 +76,47 @@ class Asset < ActiveRecord::Base
   end
 
 
-
-    # TODO Verify that this is happening correctly
-    def before_destroy
-  		File.delete absolute_path
-    #rescue    
-  	end
-
-    # Returns the file extension, like jpg or pdf
-    def extension
-      self.path.gsub(/.*\./, '')
+  def before_destroy
+    [:original, :normal, :thumb].each do |size|
+		  begin
+		    File.delete absolute_path(size)
+	    rescue Errno::ENOENT => e
+	    end
     end
+	end
 
-    # Returns the http Content-Type (image/png, etc.)
-    #
-    # TODO Add more types, or get from a reference
-    def file_type
-      file_types = {
-        /jpe?g/i => 'image/jpeg',
-        /png/ => 'image/png',
-        /gif/ => 'image/gif'
-      }
-      file_types.keys.each do |k|
-        if k.match(self.extension)
-          return file_types[k]
-        end
+  # Returns the file extension, like jpg or pdf
+  def extension
+    self.path.gsub(/.*\./, '')
+  end
+
+  # Returns the http Content-Type (image/png, etc.)
+  #
+  # TODO Add more types, or get from a reference
+  def file_type
+    file_types = {
+      /jpe?g/i => 'image/jpeg',
+      /png/ => 'image/png',
+      /gif/ => 'image/gif'
+    }
+    file_types.keys.each do |k|
+      if k.match(self.extension)
+        return file_types[k]
       end
-      nil
     end
+    nil
+  end
 
-  protected
+protected
 
-    # Fixes a 'feature' of IE where it passes the entire path instead of just the filename
-    def sanitize_filename(value)
-        #get only the filename, not the whole path
-        just_filename = value.gsub(/^.*(\\|\/)/, '')
-        #NOTE: File.basename doesn't work right with Windows paths on Unix
-        #INCORRECT: just_filename = File.basename(value.gsub('\\\\', '/')) 
-        #replace all none alphanumeric, underscore or periods with underscore
-        just_filename.gsub(/[^\w\.\-]/,'_') 
-    end
+  # Fixes a 'feature' of IE where it passes the entire path instead of just the filename
+  def sanitize_filename(value)
+      #get only the filename, not the whole path
+      just_filename = value.gsub(/^.*(\\|\/)/, '')
+      #NOTE: File.basename doesn't work right with Windows paths on Unix
+      #INCORRECT: just_filename = File.basename(value.gsub('\\\\', '/')) 
+      #replace all none alphanumeric, underscore or periods with underscore
+      just_filename.gsub(/[^\w\.\-]/,'_') 
+  end
 
 end
