@@ -3,10 +3,6 @@ class ProjectsController < ApplicationController
   before_filter :login_required, :only => [:create, :update_description, :destroy, :sort]
   
   def index
-    unless User.count
-      redirect_to :controller => 'account', :action => 'signup'
-      return
-    end
     @user = User.find_first
     @projects = Project.find :all, :order => 'position, created_at'
   end
