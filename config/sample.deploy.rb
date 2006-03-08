@@ -10,8 +10,8 @@
 # correspond to. The deploy_to path must be the path on each machine that will
 # form the root of the application path.
 
-set :application, "application"
-set :repository, "http://svn.yourhost.com/#{application}/trunk"
+set :application, "my_site.com"
+set :repository, "http://topfunky.net/svn/gullery"
 
 # =============================================================================
 # ROLES
@@ -22,10 +22,9 @@ set :repository, "http://svn.yourhost.com/#{application}/trunk"
 # be used to single out a specific subset of boxes in a particular role, like
 # :primary => true.
 
-role :web, "www01.example.com", "www02.example.com"
-role :app, "app01.example.com", "app02.example.com", "app03.example.com"
-role :db,  "db01.example.com", :primary => true
-role :db,  "db02.example.com", "db03.example.com"
+role :web, application
+role :app, application
+role :db,  application, :primary => true
 
 # =============================================================================
 # OPTIONAL VARIABLES

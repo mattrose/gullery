@@ -10,7 +10,7 @@ development:
   database: gullery_development
   username: root
   password:
-  socket: /tmp/mysql.sock
+#  socket: /tmp/mysql.sock
 
   # Connect on a TCP socket.  If omitted, the adapter will connect on the
   # domain socket given by socket instead.
@@ -25,14 +25,14 @@ test:
   database: gullery_test
   username: root
   password:
-  socket: /tmp/mysql.sock
+#  socket: /tmp/mysql.sock
 
 production:
   adapter: mysql
   database: gullery_production
   username: root
   password: 
-  socket: /tmp/mysql.sock
+#  socket: /tmp/mysql.sock
 
 
 # PostgreSQL versions 7.4 - 8.1

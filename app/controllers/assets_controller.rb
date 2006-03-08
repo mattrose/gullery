@@ -1,6 +1,6 @@
 class AssetsController < ApplicationController
 
-  before_filter :login_required, :only => [:create, :update, :destroy, :sort, :update_caption]
+  before_filter :login_required
 
   def create
     @asset = Asset.new @params[:asset]
@@ -32,6 +32,12 @@ class AssetsController < ApplicationController
       asset.update_attribute(:position, index)
     end
     render :nothing => true
+  end
+
+  def rotate
+    @asset = Asset.find @params[:id]
+    @asset.rotate(@params[:direction])
+    redirect_to projects_url(:action => 'show', :id => @asset.project_id)
   end
 
 end

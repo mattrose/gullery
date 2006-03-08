@@ -85,9 +85,12 @@ small, small a, small a:visited {
 }
 
 #project_list li, #asset_list li {
-  width: 200px;
   float: left;
   padding: 8px;
+  width: 216px;
+  voice-family: "\"}\""; 
+  voice-family:inherit;
+  width: 200px;
 }
 
 #project_list li a img, #project_list li a:visited img, #asset_list li a img, #asset_list li a:visited img {

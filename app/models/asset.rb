@@ -10,7 +10,7 @@ class Asset < ActiveRecord::Base
   acts_as_taggable
 
   # Starts with '/' but is relative to 'public'
-  ASSET_DIR = '/system/assets'
+  @@asset_dir = '/system/assets'
 
   @@thumbnail_width = '200'
   @@thumbnail_height = '120'
@@ -35,20 +35,20 @@ class Asset < ActiveRecord::Base
 	def file_field=(file_field)
 		if !file_field.original_filename.blank?
 			# Make sure the directory exists for us to save into
-			FileUtils.mkdir_p(File.expand_path("public#{ASSET_DIR}", RAILS_ROOT))
+			FileUtils.mkdir_p(File.expand_path("public#{@@asset_dir}", RAILS_ROOT))
 
-			#self.name ||= sanitized.gsub(/(.*)(\..*)/, '\1') # Name without extension
-			self.path = "#{ASSET_DIR}/" + sanitize_filename(file_field.original_filename)
-			File.open(self.absolute_path, File::CREAT|File::WRONLY) { |f| f.write(file_field.read) }
+      # Set file to unique timestamp plus original extension
+			self.path = "#{@@asset_dir}/#{Time.now.utc.to_i}." + file_field.original_filename.gsub(/.*\./, '')
+			File.open(self.absolute_path(:original), File::CREAT|File::WRONLY) { |f| f.write(file_field.read) }
 
-      self.create_thumbnail
-      self.create_normal
+      self.resize_thumbnail
+      self.resize_normal
 		end
 	end
 
 
-  def create_thumbnail
-		image = MiniMagick::Image.from_file(self.absolute_path)
+  def resize_thumbnail
+		image = MiniMagick::Image.from_file(self.absolute_path(:original))
 		if (image.width.to_f/image.height.to_f) >= (@@thumbnail_width.to_f/@@thumbnail_height.to_f)
       # Wider than tall...use height
       image.combine_options do |i|
@@ -65,13 +65,14 @@ class Asset < ActiveRecord::Base
   end
 
 
-  def create_normal
-		image = MiniMagick::Image.from_file(self.absolute_path)
+  def resize_normal
+		image = MiniMagick::Image.from_file(self.absolute_path(:original))
 		if image.width > 640 || image.height > 480
       image.combine_options do |i|
         i.resize "640x480"
       end
     end
+    # TODO Refactor
     image.write(File.expand_path("public#{self.web_path(:normal)}", RAILS_ROOT))
   end
 
@@ -84,6 +85,20 @@ class Asset < ActiveRecord::Base
 	    end
     end
 	end
+
+  def rotate(direction='cw')
+    degrees = 90
+    if direction == 'ccw'
+      degrees = -90
+    end
+    image = MiniMagick::Image.from_file(self.absolute_path(:original))
+    image.combine_options do |i|
+      i.rotate degrees
+    end
+    image.write(File.expand_path("public#{self.web_path(:original)}", RAILS_ROOT))
+    resize_thumbnail
+    resize_normal
+  end
 
   # Returns the file extension, like jpg or pdf
   def extension

@@ -9,4 +9,5 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 
-task :default => [:test_plugins, :test_units, :test_functional]
+# Does weird things...runs tests on development db
+#task :default => [:test_plugins, :test_units, :test_functional]
