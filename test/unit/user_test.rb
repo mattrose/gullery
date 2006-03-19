@@ -22,11 +22,6 @@ class UserTest < Test::Unit::TestCase
     assert u.errors.on(:password_confirmation)
   end
 
-  def test_should_require_email
-    u = create_user(:email => nil)
-    assert u.errors.on(:email)
-  end
-
   def test_should_reset_password
     users(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
     assert_equal users(:quentin), User.authenticate('quentin', 'new password')

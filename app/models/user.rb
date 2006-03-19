@@ -3,14 +3,13 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
-  validates_presence_of     :login, :email
+  validates_presence_of     :login
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 5..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :login,    :within => 3..40
-  validates_length_of       :email,    :within => 3..100
-  validates_uniqueness_of   :login, :email, :salt
+  validates_uniqueness_of   :login, :salt
   before_save :encrypt_password
 
   has_many :projects

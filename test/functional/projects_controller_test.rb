@@ -23,17 +23,23 @@ class ProjectsControllerTest < Test::Unit::TestCase
   end
 
   def test_create_restricted
-    assert_requires_login { post :create }
-    assert_accepts_login(:quentin) { post :create, :project => { :name => 'Fox Tall Action Figure' } }
+    assert_requires_login() { post :create }
+
+    login_as :quentin
+    project_count = Project.count
+    post :create, :project => { :name => 'Fox Tall Action Figure' }
+    assert_response :redirect
+    assert_redirected_to projects_url
+    assert_equal project_count + 1, Project.count
   end
   
   def test_update_restricted
-    assert_requires_login { post :update }
-    assert_accepts_login(:quentin) { post :update, :id => 1, :name => 'Cloneberry Lollipop' }
+    assert_requires_login() { post :update_description }
+    assert_accepts_login(:quentin) { post :update_description, :id => 1, :value => 'Cloneberry Lollipop' }
   end
   
   def test_destroy_restricted
-    assert_requires_login { get :destroy }
+    assert_requires_login() { get :destroy }
     assert_accepts_login(:quentin) { get :destroy, :id => 1 }
   end
 
@@ -48,25 +54,19 @@ class ProjectsControllerTest < Test::Unit::TestCase
     old_count = Project.count
     login_as :quentin
     post :create, :project => { :name => 'Fox Tall Action Figure' }
-    assert_response :success
+    assert_response :redirect
+    assert_redirected_to projects_url
     assert_not_nil assigns(:project)
-    assert_equal 'text/javascript', @response.headers['Content-Type']
     
     assert_equal old_count + 1, Project.count
   end
   
-  def test_update
-    old_count = Project.count
+  def test_update_description
     login_as :quentin
-    post :update, :id => 1, :project => { :name => 'Fox Small Beanie' }
+    post :update_description, :id => 1, :value => 'Cloneberry Pie'
     assert_response :success
     assert_not_nil assigns(:project)
-    assert_equal 'text/javascript', @response.headers['Content-Type']
-    
-    assert_equal 1, @controller.current_user.projects.length
-    project = Project.find 1
-    assert_equal 'Fox Small Beanie', project.name
-    assert_equal old_count, Project.count
+    assert_equal 'Cloneberry Pie', Project.find(1).description
   end
   
   def test_destroy

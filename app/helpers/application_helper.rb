@@ -2,12 +2,13 @@
 module ApplicationHelper
   
   def show_page_title
-    @page_title || 'gullery photo gallery'
+    !@user.nil? && !@user.company.blank? ? @user.company : 'gullery photo gallery'
+    
   end
 
   def show_page_nav
     user = User.find_first
-    return if user.nil?
+    return 'gullery photo gallery' if user.nil?
     nav = link_to(user.company, :controller => '/')
     nav += ' ' + content_tag(:small, link_to((@project.name), projects_url(:action => 'show', :id => @project))) if @project
     nav

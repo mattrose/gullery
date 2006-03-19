@@ -11,7 +11,9 @@ if @session[:user]
   render(:partial => 'asset_form')
   sortable_element  'asset_list', 
                     :url => capture { assets_url(:action => 'sort', :project_id => @project) },
-                    :handle => 'handle'
+                    :handle => 'handle',
+                    :loading => "Element.show('loading')",
+                    :complete => "Element.hide('loading')"
   in_place_editor "project_description_#{project.id}", 
                   :url => capture { projects_url(:action => 'update_description', :id => @project) }, 
                   :rows => 5

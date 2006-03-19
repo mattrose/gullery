@@ -3,6 +3,10 @@ class ProjectsController < ApplicationController
   before_filter :login_required, :only => [:create, :update_description, :destroy, :sort]
   
   def index
+    if User.count == 0
+      redirect_to signup_url
+      return
+    end
     @user = User.find_first
     @projects = Project.find :all, :order => 'position, created_at'
   end
@@ -14,7 +18,9 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new @params[:project]
     @project.user_id = current_user.id
-    unless @project.save
+    if @project.save
+      redirect_to projects_url
+    else
       render :action => 'error'
     end
   end
@@ -31,7 +37,6 @@ class ProjectsController < ApplicationController
     @project = Project.find @params[:id]
     @project.destroy
   end
-
 
   def sort
     project_ids = @params[:project_list]

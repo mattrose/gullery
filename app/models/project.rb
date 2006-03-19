@@ -4,7 +4,7 @@ class Project < ActiveRecord::Base
   validates_associated :user
 
   belongs_to :user
-  has_many :assets, :order => 'position, created_at'
+  has_many :assets, :order => 'position, created_at', :dependent => true
 
   acts_as_taggable
 

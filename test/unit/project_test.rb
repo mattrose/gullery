@@ -19,7 +19,7 @@ class ProjectTest < Test::Unit::TestCase
 
   def test_should_show_only_visible_assets
     p = Project.find 1
-    assert_equal 4, p.assets.length
+    assert_equal 5, p.assets.length
     assert_equal 3, p.visible_assets.length
     # TODO assert_equal [assets(:person_drinking), assets(:can_label), assets(:closeup)], p.visible_assets
   end

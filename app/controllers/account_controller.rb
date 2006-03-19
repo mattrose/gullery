@@ -21,25 +21,24 @@ class AccountController < ApplicationController
   # To skip this in a subclassed controller:
   #
   #   skip_before_filter :login_required
-
-  # say something nice, you goof!  something sweet.
+  
   def index
     redirect_to(:action => 'signup') unless logged_in? or User.count > 0
   end
 
   # If you want persistent logins, uncomment the second line of #login and add this to your login.rhtml view:
   #
-  #   <p><label for="remember_me">Remember Me?</label>
-  #   <%= check_box_tag 'remember_me', 1, true %></p>
   #
   # Keep in mind that this will cause your session to stick around for 4 weeks.  If this is undesirable, use a plain old cookie.
   def login
     return unless request.post?
-    #::ActionController::CgiRequest::DEFAULT_SESSION_OPTIONS.update(:session_expires => 4.weeks.from_now) if params[:remember_me]
+    ::ActionController::CgiRequest::DEFAULT_SESSION_OPTIONS.update(:session_expires => 4.weeks.from_now) if params[:remember_me]
     self.current_user = User.authenticate(params[:login], params[:password])
     if current_user
       redirect_back_or_default(:controller => '/')
       flash[:notice] = "Logged in successfully"
+    else
+      flash[:notice] = "Please try again"
     end
   end
 

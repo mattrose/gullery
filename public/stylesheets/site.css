@@ -17,9 +17,16 @@ input {
 ******************************/
 
 #container {
-  width: 650px;
   margin: 0 auto;
+  padding: 0 10px;
+  width: 690px;
+  voice-family: "\"}\""; 
+  voice-family:inherit;
+  width: 670px;
 }
+html>body #container {
+  width: 670px;
+} 
 
 #header {
   
@@ -115,9 +122,10 @@ small, small a, small a:visited {
 
 .toolbar { 
   background-color: #333333;
-  opacity: .7;
-	filter: alpha(opacity=70);
+  opacity: .6;
+	filter: alpha(opacity=60);
 	padding-left: 10px;
+	text-align: right;
 }
 
 .toolbar span {

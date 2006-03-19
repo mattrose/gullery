@@ -37,3 +37,14 @@ not_visible:
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>
   position: 0
+
+photo:
+  id: 5
+  project_id: 1
+  path: /system/photo.jpg
+  caption: A photo to rotate
+  is_visible: 
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+  position: 0
+

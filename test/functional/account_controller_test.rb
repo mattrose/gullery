@@ -67,15 +67,6 @@ class AccountControllerTest < Test::Unit::TestCase
     assert_equal old_count, User.count
   end
 
-  def test_should_require_email_on_signup
-    User.find(1).destroy
-    old_count = User.count
-    create_user(:email => nil)
-    assert assigns(:user).errors.on(:email)
-    assert_response :success
-    assert_equal old_count, User.count
-  end
-
   def test_should_reject_extra_logins
     old_count = User.count
     create_user

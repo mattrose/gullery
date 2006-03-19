@@ -4,23 +4,14 @@
 <p><label for="login">Login</label><br/>
 <%= text_field 'user', 'login' %></p>
 
-<p><label for="email">Email</label><br/>
-<%= text_field 'user', 'email' %></p>
-
 <p><label for="password">Password</label><br/>
 <%= password_field 'user', 'password' %></p>
 
 <p><label for="password_confirmation">Confirm Password</label><br/>
 <%= password_field 'user', 'password_confirmation' %></p>
 
-<p><label for="name">Name</label><br/>
-<%= text_field 'user', 'name' %></p>
-
-<p><label for="company">Company</label><br/>
+<p><label for="company">Name, Company, or Project Title</label><br/>
 <%= text_field 'user', 'company' %></p>
-
-<p><label for="website">Website</label><br/>
-http://<%= text_field 'user', 'website' %></p>
 
 <p><%= submit_tag 'Sign up' %></p>
 <%= end_form_tag %>
