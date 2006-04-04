@@ -1,5 +1,5 @@
 @indent = 0
-div(:id => "project_description_#{@project.id}") do
+div(:id => "project_description_#{@project.id}", :class => 'description') do
   textilize(@project.description.blank? ? '&nbsp;' : @project.description)
 end
 

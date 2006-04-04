@@ -85,6 +85,10 @@ small, small a, small a:visited {
   color: #cccccc;
 }
 
+div.description {
+  text-align: left;
+}
+
 /******************************
 *  Thumbnails
 ******************************/

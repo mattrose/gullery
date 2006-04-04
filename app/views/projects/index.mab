@@ -1,4 +1,4 @@
-div.user_description! do
+div(:id => 'user_description', :class => 'description') do
   textilize(@user.description.blank? ? '&nbsp;' : @user.description)
 end
 
