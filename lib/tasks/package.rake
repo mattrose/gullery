@@ -1,7 +1,7 @@
 require 'rake/packagetask'
 
 PKG_NAME      = 'gullery'
-PKG_VERSION   = '0.0.1'
+PKG_VERSION   = '0.0.2'
 PKG_LABEL     = "#{PKG_NAME}-#{PKG_VERSION}"
 
 Rake::PackageTask.new(PKG_NAME, PKG_VERSION) do |p|

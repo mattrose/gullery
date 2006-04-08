@@ -31,9 +31,15 @@ html>body #container {
 } 
 
 #header {
-  background: #3B1E33 url(/images/grad-up.png) repeat-x top left;
+  background-color: #3B1E33;
+  /* Mozilla ignores crazy MS image filters, so it will skip the following */
   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/grad-up.png',sizingMethod='scale');
 }
+/* IE ignores styles with [attributes], so it will skip the following. */
+#header[id] {
+  background: #3B1E33 url(/images/grad-up.png) repeat-x top left;
+}
+
 
 #content {
   
