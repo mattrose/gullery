@@ -3,7 +3,6 @@ module ApplicationHelper
   
   def show_page_title
     !@user.nil? && !@user.company.blank? ? @user.company : 'gullery photo gallery'
-    
   end
 
   def show_page_nav
