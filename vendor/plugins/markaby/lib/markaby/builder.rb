@@ -195,7 +195,7 @@ module Markaby
       if args.empty?
         args = ["-//W3C//DTD XHTML 1.0 Transitional//EN", "DTD/xhtml1-transitional.dtd"]
       end
-      @builder.instruct!
+      #@builder.instruct! # Causes IE quirks mode error
       @builder.declare!(:DOCTYPE, :html, :PUBLIC, *args)
       tag!(:html, :xmlns => "http://www.w3.org/1999/xhtml",
         "xml:lang" => "en", :lang => "en", &block)
